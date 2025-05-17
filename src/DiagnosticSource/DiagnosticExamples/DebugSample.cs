@@ -11,7 +11,7 @@ namespace DiagnosticExamples
             Trace.Listeners.Add(listener);
         }
 
-        public void RunSimple()
+        public void RunSample()
         {
             string result = PerformCalculation("5", "20");
 

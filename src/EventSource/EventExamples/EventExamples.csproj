@@ -5,4 +5,8 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EventExamples.Library\EventExamples.Library.csproj" />
+  </ItemGroup>
+
 </Project>

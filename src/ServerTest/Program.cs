@@ -1,9 +1,5 @@
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
-namespace EventExamples.Api;
+namespace ServerTest;
 
 public class Program
 {

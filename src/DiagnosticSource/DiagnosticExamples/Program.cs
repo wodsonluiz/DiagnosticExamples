@@ -16,7 +16,7 @@ IDisposable subscription = DiagnosticListener.AllListeners.Subscribe(observer);
 var lib = new SampleEvents();
 lib.ReiseEvent();
 
-//var url = "http://localhost:5100/WeatherForecast";
+//var url = "http://localhost:5052/WeatherForecast";
 //var client = new HttpClient();
 
 //var response = await client.GetAsync(url);

@@ -1,7 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System;
-using System.Net.Http;
-using EventExamples;
 using EventExamples.Library;
 
 //var eventSourceListener = new MyEventSourceListener();
@@ -11,7 +9,7 @@ SampleEvents lib = new SampleEvents();
 int result = lib.Calculate(2, 4);
 Console.WriteLine("Calculation from SampleEvents library is {0}", result);
 
-//string url = "http://localhost:5019/WeatherForecast";
+//string url = "http://localhost:5052/WeatherForecast";
 //var client = new HttpClient();
 
 //var response = client.GetAsync(url)

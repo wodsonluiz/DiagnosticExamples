@@ -34,7 +34,7 @@ class Program
 
         // Simulando um servidor
         var server = new HttpListener();
-        server.Prefixes.Add("http://localhost:5002/");
+        server.Prefixes.Add("http://localhost:5052/");
         server.Start();
         logger.LogInformation("NotificationService completed http://localhost:5002");
 

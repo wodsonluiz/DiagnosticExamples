@@ -1,64 +1,48 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net;
+using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
-namespace NotificationService;
+var builder = WebApplication.CreateBuilder(args);
 
-class Program
-{
-    static ActivitySource activitySource = new("NotificationService");
+var envName = builder.Environment.ApplicationName;
+var resourceBuilder = ResourceBuilder.CreateDefault().AddService(envName);
 
-    static void Main(string[] args)
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing =>
     {
-        using var loggerFactory = LoggerFactory.Create(builder =>
-        {
-            builder.AddSimpleConsole(options =>
+        tracing
+            .SetResourceBuilder(resourceBuilder)
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            .AddOtlpExporter(otlp =>
             {
-                options.IncludeScopes = true;
-                options.SingleLine = true;
+                otlp.Endpoint = new Uri("http://localhost:4317");
+                otlp.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                otlp.ExportProcessorType = OpenTelemetry.ExportProcessorType.Batch; 
             });
-        });
+    });
 
-        var logger = loggerFactory.CreateLogger<Program>();
 
-        using var listener = new ActivityListener
-        {
-            ShouldListenTo = _ => true,
-            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
-            ActivityStarted = a => logger.LogInformation("Notification init: {name}", a.DisplayName),
-            ActivityStopped = a => logger.LogInformation("Notification finish: {name}", a.DisplayName)
-        };
+// Add services to the container.
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
 
-        ActivitySource.AddActivityListener(listener);
+var app = builder.Build();
 
-        // Simulando um servidor
-        var server = new HttpListener();
-        server.Prefixes.Add("http://localhost:5052/");
-        server.Start();
-        logger.LogInformation("NotificationService completed http://localhost:5002");
-
-        while (true)
-        {
-            var context = server.GetContextAsync()
-                .GetAwaiter()
-                .GetResult();
-
-            var traceparent = context.Request.Headers["traceparent"];
-            var ctx = ActivityContext.Parse(traceparent, null);
-
-            using var activity = activitySource.StartActivity("NotifingOrder", ActivityKind.Server, ctx);
-            activity?.SetTag("channel", "email");
-
-            logger.LogInformation("Notifying client by {channel}", activity?.GetTagItem("channel"));
-
-            context.Response.StatusCode = 200;
-            context.Response.OutputStream.WriteAsync(System.Text.Encoding.UTF8.GetBytes("Notifield"))
-                .GetAwaiter()
-                .GetResult();
-
-            context.Response.Close();
-        }
-
-    }
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+app.MapControllers();
+
+app.Run();

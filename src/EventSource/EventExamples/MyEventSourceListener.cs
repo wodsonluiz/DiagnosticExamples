@@ -47,8 +47,6 @@ namespace EventExamples
             
             Console.WriteLine("Message: {0}", eventData.Message);
             Console.WriteLine("---------------------------------------");
-            
-            
         }
     }
 }

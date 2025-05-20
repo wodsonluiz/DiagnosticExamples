@@ -1,4 +1,5 @@
-# .NET Diagnostics for Applications: Best Practices ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/wodsonluiz/DiagnosticExamples/dotnet.yml)
+# .NET Diagnostics for Applications: Best Practices 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/wodsonluiz/DiagnosticExamples/dotnet.yml)
 
 
 Repositório para explorar os recursos das APIs de observabilidade do .NET: `EventSource`, `DiagnosticSource`, `OpenTelemetry` e `Distributed Tracing`.([GitHub][1])
@@ -12,8 +13,7 @@ Repositório para explorar os recursos das APIs de observabilidade do .NET: `Eve
 * **Distributed Tracing**: Técnicas para rastrear requisições através de múltiplos serviços.
 * **Jaeger**: Ferramenta de código aberto para rastreamento distribuído.
 
----
-
+##### _Os projetos nesse repositório vai possibilitar esse laboratório_:
 ![Screenshot 2025-05-19 at 22 20 36](https://github.com/user-attachments/assets/2a90eb0f-9191-41cf-a658-f6a89b59ee0b)
 
 

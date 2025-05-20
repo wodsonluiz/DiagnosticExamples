@@ -1,4 +1,5 @@
-# DiagnosticExamples - .NET Diagnostics for Applications: Best Practices
+# .NET Diagnostics for Applications: Best Practices ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/wodsonluiz/DiagnosticExamples/dotnet.yml)
+
 
 Repositório para explorar os recursos das APIs de observabilidade do .NET: `EventSource`, `DiagnosticSource`, `OpenTelemetry` e `Distributed Tracing`.([GitHub][1])
 
